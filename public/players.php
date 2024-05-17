@@ -5,15 +5,12 @@
 </head>
 <center><form action="insert_player.php" method="post">
 <label for="name">Give me your first and last name</label><br>
-<input type="text" id="name" name="name"><input type="submit" value="wyślij">
+<input type="text" id="name" name="name"><input type="submit" value="submit">
 </form>
-<a href="mode.php">Go to select players and game mode≤</a>
+<a href="mode.php">Go to select players and game mode</a>
 </center>
-<?php
-$servername="mysql";
-$username="v.je";
-$password="v.je";
-$dbname="football";
+<?php include 'login_data.php';
+
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname",$username, $password);

@@ -1,8 +1,5 @@
 <?php
-$servername="mysql";
-$username="v.je";
-$password="v.je";
-$dbname="football";
+include 'login_data.php';
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname",$username, $password);
