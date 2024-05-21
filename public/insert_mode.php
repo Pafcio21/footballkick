@@ -18,7 +18,6 @@ $players_per_team = 2;
 $teams = array_chunk($players,$players_per_team);
 $teamId_number=2;
 
-
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname",$username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -28,7 +27,6 @@ try {
     $allTeams=$stmt->fetchAll();
 }   catch(PDOException $e){    
 }
-
 foreach($teams as $team)
 {
     // druzyny ktore juz istnieja
@@ -54,7 +52,6 @@ foreach($teams as $team)
          * 1. Przypisanie id znalezionej druzyny do zmiennej $teamId
          */
     }
-
 
 }
 $conn = null;
@@ -102,6 +99,7 @@ class RoundRobinTournament {
 $playingTeams = array_column($allTeams_id, 'team_id');
 $tournament = new RoundRobinTournament($playingTeams);
 $matches = $tournament->getMatches();
+
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname",$username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -117,7 +115,6 @@ for($i = 1; $i <= $revange; $i++){
         $round1=$round1 + 1; 
     
         foreach($roundMatches1 as $match1) {
-        
             if($i % 2 == 0){
                 if ($match1[0] !== 'BYE' && $match1[1] !== 'BYE') {
                     $sql = "INSERT INTO games(round, tournament_id, team1, team2) Values('$round1', '$tournament_id', '" . $match1[0] . "', '" . $match1[1] . "')";

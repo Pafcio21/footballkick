@@ -1,4 +1,4 @@
-</head>
+<head>
 <style>
     table, td { border: 1px solid black;}
 </style>

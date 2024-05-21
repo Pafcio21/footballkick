@@ -138,7 +138,7 @@ try{
     )
     WHERE tournament_id = $id ORDER BY win DESC");
     $stmt->execute();
-    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $AllTeamStats = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $team_stats=$stmt->fetchAll();
 
 }   catch(PDOException $e){    
