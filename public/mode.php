@@ -33,5 +33,5 @@ echo "<input checked type='radio' name='mode'>
 echo "<input type='radio' name='mode' disabled>
 <label for='ledder_with_loser'>ledder with losser</label><br>";
 ?>
-<input type="submit" id="submit" value="Submit" >
+<input type="submit" id="submitButton" value="Submit">
 </form>
