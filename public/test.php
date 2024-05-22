@@ -101,7 +101,7 @@ $id=$_GET['id'];
                 } else {
                     $sql = "INSERT INTO team_stats (team_id, points, win, lose, draw, tournament_id) VALUES (:team_id, :points1, :win, :lose, :draw, $id)";
                     $stmt = $conn->prepare($sql);
-                    $stmt->execute([':team_id' => $team1, ':points1' => ($points_team1 - $points_team2), ':win' => ($points_team1 > $points_team2 ? 1 : 0), ':lose' => ($points_team1 > $points_team2 ? 1 : 0), ':draw' => ($points_team1 == $points_team2 ? 1 : 0)]);
+                    $stmt->execute([':team_id' => $team1, ':points1' => ($points_team1 - $points_team2), ':win' => ($points_team1 > $points_team2 ? 1 : 0), ':lose' => ($points_team1 > $points_team2 ? 0 : 1), ':draw' => ($points_team1 == $points_team2 ? 0 : 1)]);
                 }
                 // Aktualizacja danych dla team2
                 $sql = "SELECT * FROM team_stats WHERE team_id = :team_id AND tournament_id = $id";
@@ -124,7 +124,7 @@ $id=$_GET['id'];
                 } else {
                     $sql = "INSERT INTO team_stats (team_id, points, win, lose, draw, tournament_id) VALUES (:team_id, :points2, :win, :lose, :draw, $id)";
                     $stmt = $conn->prepare($sql);
-                    $stmt->execute([':team_id' => $team2, ':points2' => ($points_team2 - $points_team1), ':win' => ($points_team2 > $points_team1 ? 1 : 0), ':lose' => ($points_team2 > $points_team1 ? 1 : 0), ':draw' => ($points_team2 == $points_team1 ? 1 : 0)]);
+                    $stmt->execute([':team_id' => $team2, ':points2' => ($points_team2 - $points_team1), ':win' => ($points_team2 > $points_team1 ? 1 : 0), ':lose' => ($points_team2 > $points_team1 ? 0 : 1), ':draw' => ($points_team2 == $points_team1 ? 0 : 1)]);
                 }
             }
 } catch(PDOException $e) {
