@@ -2,6 +2,7 @@
 <style>
     table, td { border: 1px solid black;}
 </style>
+<title>Register player</title>
 </head>
 <center><form action="insert_player.php" method="post">
 <label for="name">Give me your first and last name</label><br>

@@ -2,6 +2,7 @@
 <style>
     table, td { border: 1px solid black;}
 </style>
+<title>See tournaments</title>
 </head>
 <center>
 <?php include 'login_data.php';
