@@ -17,9 +17,9 @@ try {
 }
 echo "Choose tournament:";
 echo "<table>";
-$id=1;
+$a=1;
 foreach($allNames as $name){
     $id=$name['id'];
-    echo "<tr><td width='40px'><a href=games.php?id=$id>".$name['id']."</a></td><td width='200px'><a href=games.php?id=$id>".$name['name']."</a></td></tr>";
-    $id=$id+1;
+    echo "<tr><td width='40px'><a href=games.php?id=$id>".$a."</a></td><td width='200px'><a href=games.php?id=$id>".$name['name']."</a></td></tr>";
+    $a++;
 }

@@ -42,15 +42,31 @@ $id=$_GET['id'];
     if(is_NULL($match[0]['points_team1']) && is_NULL($match[1]['points_team2']) || is_NULL($match[2]['points_team1']) && is_NULL($match[3]['points_team2']))
     {
         if ($match[0]['team_id'] === $match[0]['team1']) {
-            echo "<tr><td>".$match[0]['name'].", ".$match[1]['name']."</td><td><input type=hidden name=id value=$id><input type=number name=points_team1[]></td><td> VS </td><td><input type=number name=points_team2[]></td><td>".$match[2]['name'].", ".$match[3]['name']."</td></tr>";
+            $id1=$match[0]['team1'];
+            $id2=$match[0]['team2'];
+            var_dump($id1);
+            var_dump($id2);
+            echo "<tr><td><a href=teamStats.php?id=$id1>".$match[0]['name'].", ".$match[1]['name']."</a></td><td><input type=hidden name=id value=$id><input type=number name=points_team1[]></td><td> VS </td><td><input type=number name=points_team2[]></td><td><a href=teamStats.php?id=$id2>".$match[2]['name'].", ".$match[3]['name']."</a></td></tr>";
         } else {
-            echo "<tr><td>".$match[2]['name'].", ".$match[3]['name']."</td><td><input type=hidden name=id value=$id><input type=number name=points_team1[]></td><td> VS </td><td><input type=number name=points_team2[]></td><td>".$match[0]['name'].", ".$match[1]['name']."</td></tr>";
+            $id1=$match[0]['team1'];
+            $id2=$match[0]['team2'];
+            var_dump($id1);
+            var_dump($id2);
+            echo "<tr><td><a href=teamStats.php?id=$id1>".$match[2]['name'].", ".$match[3]['name']."</a></td><td><input type=hidden name=id value=$id><input type=number name=points_team1[]></td><td> VS </td><td><input type=number name=points_team2[]></td><td><a href=teamStats.php?id=$id2>".$match[0]['name'].", ".$match[1]['name']."</a></td></tr>";
         }
     }else{
         if ($match[0]['team_id'] === $match[0]['team1']) {
-            echo "<tr><td>".$match[0]['name'].", ".$match[1]['name']."</td><td align=center>" . $match[1]['points_team1'] . "</td><td> VS </td><td align=center>" . $match[2]['points_team2'] . "</td><td>".$match[2]['name'].", ".$match[3]['name']."</td></tr>";
+            $id1=$match[0]['team1'];
+            $id2=$match[0]['team2'];
+            var_dump($id1);
+            var_dump($id2);
+            echo "<tr><td><a href=teamStats.php?id=$id1>".$match[0]['name'].", ".$match[1]['name']."</a></td><td align=center>" . $match[1]['points_team1'] . "</td><td> VS </td><td align=center>" . $match[2]['points_team2'] . "</td><td><a href=teamStats.php?id=$id2>".$match[2]['name'].", ".$match[3]['name']."</a></td></tr>";
         } else {
-            echo "<tr><td>".$match[2]['name'].", ".$match[3]['name']."</td><td align=center>" . $match[2]['points_team1'] . "</td><td> VS </td><td align=center>" . $match[1]['points_team2'] . "</td><td>".$match[0]['name'].", ".$match[1]['name']."</td></tr>";
+            $id1=$match[0]['team1'];
+            $id2=$match[0]['team2'];
+            var_dump($id1);
+            var_dump($id2);
+            echo "<tr><td><a href=teamStats.php?id=$id1>".$match[2]['name'].", ".$match[3]['name']."</a></td><td align=center>" . $match[2]['points_team1'] . "</td><td> VS </td><td align=center>" . $match[1]['points_team2'] . "</td><td><a href=teamStats.php?id=$id2>".$match[0]['name'].", ".$match[1]['name']."</a></td></tr>";
         }
     }
     $a=$a+1;
@@ -170,7 +186,6 @@ foreach ($team_stats as $stats) {
     echo "<table border='1'>";
     echo "<tr><th>Position</th><th>Team ID</th><th>Wins</th><th>Lost</th><th>Points</th></tr>";
     $position = 1;
-
     foreach($table as $team){
         echo "<tr>";
         echo "<td align=center>" . $position . "</td>";
@@ -182,6 +197,36 @@ foreach ($team_stats as $stats) {
         $position++;
     }
     echo "</table>";
+    try {
+        // Pobieranie danych z tabeli team_stats
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname",$username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmt = $conn->prepare("SELECT team_id, SUM(win) AS total_wins, SUM(lose) AS total_loses FROM team_stats WHERE tournament_id = :tournament_id GROUP BY team_id");
+        $stmt->bindParam(':tournament_id', $id);
+        $stmt->execute();
+        $team_stats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        // Aktualizacja tabeli tournament_teams
+        foreach ($team_stats as $team_stat) {
+            $team_id = $team_stat['team_id'];
+            $total_wins = $team_stat['total_wins'];
+            $total_loses = $team_stat['total_loses'];
+    
+            $sql = "UPDATE tournament_teams SET win = :total_wins, lose = :total_loses WHERE team_id = :team_id AND tournament_id = :tournament_id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':total_wins', $total_wins);
+            $stmt->bindParam(':total_loses', $total_loses);
+            $stmt->bindParam(':team_id', $team_id);
+            $stmt->bindParam(':tournament_id', $id);
+            $stmt->execute();
+        }
+    } catch(PDOException $e) {
+        // Obsługa błędu
+        echo "Error: " . $e->getMessage();
+    }
+    
+    // Zamknięcie połączenia
+    $conn = null;
 try{
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
