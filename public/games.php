@@ -197,7 +197,6 @@ foreach ($team_stats as $stats) {
         $stmt->bindParam(':tournament_id', $id);
         $stmt->execute();
         $team_stats = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
         // Aktualizacja tabeli tournament_teams
         foreach ($team_stats as $team_stat) {
             $team_id = $team_stat['team_id'];
