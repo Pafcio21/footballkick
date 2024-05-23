@@ -44,28 +44,20 @@ $id=$_GET['id'];
         if ($match[0]['team_id'] === $match[0]['team1']) {
             $id1=$match[0]['team1'];
             $id2=$match[0]['team2'];
-            var_dump($id1);
-            var_dump($id2);
             echo "<tr><td><a href=teamStats.php?id=$id1>".$match[0]['name'].", ".$match[1]['name']."</a></td><td><input type=hidden name=id value=$id><input type=number name=points_team1[]></td><td> VS </td><td><input type=number name=points_team2[]></td><td><a href=teamStats.php?id=$id2>".$match[2]['name'].", ".$match[3]['name']."</a></td></tr>";
         } else {
             $id1=$match[0]['team1'];
             $id2=$match[0]['team2'];
-            var_dump($id1);
-            var_dump($id2);
             echo "<tr><td><a href=teamStats.php?id=$id1>".$match[2]['name'].", ".$match[3]['name']."</a></td><td><input type=hidden name=id value=$id><input type=number name=points_team1[]></td><td> VS </td><td><input type=number name=points_team2[]></td><td><a href=teamStats.php?id=$id2>".$match[0]['name'].", ".$match[1]['name']."</a></td></tr>";
         }
     }else{
         if ($match[0]['team_id'] === $match[0]['team1']) {
             $id1=$match[0]['team1'];
             $id2=$match[0]['team2'];
-            var_dump($id1);
-            var_dump($id2);
             echo "<tr><td><a href=teamStats.php?id=$id1>".$match[0]['name'].", ".$match[1]['name']."</a></td><td align=center>" . $match[1]['points_team1'] . "</td><td> VS </td><td align=center>" . $match[2]['points_team2'] . "</td><td><a href=teamStats.php?id=$id2>".$match[2]['name'].", ".$match[3]['name']."</a></td></tr>";
         } else {
             $id1=$match[0]['team1'];
             $id2=$match[0]['team2'];
-            var_dump($id1);
-            var_dump($id2);
             echo "<tr><td><a href=teamStats.php?id=$id1>".$match[2]['name'].", ".$match[3]['name']."</a></td><td align=center>" . $match[2]['points_team1'] . "</td><td> VS </td><td align=center>" . $match[1]['points_team2'] . "</td><td><a href=teamStats.php?id=$id2>".$match[0]['name'].", ".$match[1]['name']."</a></td></tr>";
         }
     }
