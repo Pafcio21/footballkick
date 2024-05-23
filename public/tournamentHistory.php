@@ -27,7 +27,7 @@
     foreach ($team_stats as $stats) {
         $table[$stats['id']][] = $stats;
     }
-        echo "<h1>Scoreboard</h1>";
+        echo "<h1>Teams Scoreboard</h1>";
         echo "<table border='1'>";
         echo "<tr><th>Position</th><th>Team ID</th><th>Players Name</th><th>Wins</th><th>Lost</th><th>Points</th></tr>";
         $position = 1;
