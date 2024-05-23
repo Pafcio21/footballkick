@@ -29,13 +29,14 @@
     }
         echo "<h1>Scoreboard</h1>";
         echo "<table border='1'>";
-        echo "<tr><th>Position</th><th>Team ID</th><th>Wins</th><th>Lost</th><th>Points</th></tr>";
+        echo "<tr><th>Position</th><th>Team ID</th><th>Players Name</th><th>Wins</th><th>Lost</th><th>Points</th></tr>";
         $position = 1;
         foreach($table as $team){
+            $id = $team[0]['team_id'];
             echo "<tr>";
             echo "<td align=center>" . $position . "</td>";
             echo "<td align=center>" . $team[0]['team_id'] . "</td>";
-            echo "<td align=center>" . $team[0]['player_names'] . "</td>";
+            echo "<td align=center><a href=teamStats.php?id=$id>" . $team[0]['player_names'] . "</a></td>";
             echo "<td align=center>" . $team[0]['win'] . "</td>";
             echo "<td align=center>" . $team[0]['lose'] . "</td>";
             echo "<td align=center>" . $team[0]['points'] . "</td>";

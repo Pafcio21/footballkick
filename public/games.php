@@ -163,7 +163,7 @@ try{
     teams.player1_id = players.id
     OR teams.player2_id = players.id
     )
-    WHERE tournament_id = $id ORDER BY win DESC");
+    WHERE tournament_id = $id ORDER BY win DESC, points DESC");
     $stmt->execute();
     $AllTeamStats = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $team_stats=$stmt->fetchAll();
