@@ -11,13 +11,12 @@
     try{
         $conn = new PDO("mysql:host=$servername;dbname=$dbname",$username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("SELECT teams.id, GROUP_CONCAT(players.name) AS player_names, tournament_teams.elo, tournament_teams.team_id, tournament_teams.win, tournament_teams.lose, tournament_teams.points,
-        sum(tournament_teams.win)-sum(tournament_teams.lose) AS ranking 
-        FROM tournament_teams 
-        LEFT JOIN teams ON tournament_teams.team_id = teams.id 
+        $stmt = $conn->prepare("SELECT teams.id, GROUP_CONCAT(players.name) AS player_names, teams.elo, teams.win, teams.lose, teams.points,
+        sum(teams.win)-sum(teams.lose) AS ranking 
+        FROM teams 
         LEFT JOIN players ON teams.player1_id = players.id OR teams.player2_id = players.id 
         GROUP BY teams.id 
-        ORDER BY ranking DESC, points DESC");
+        ORDER BY elo DESC, ranking DESC, points DESC");
         $stmt->execute();
         $AllTeamStats = $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $team_stats=$stmt->fetchAll();
@@ -33,10 +32,10 @@
         echo "<tr><th>Position</th><th>Team ID</th><th>Players Name</th><th>Wins</th><th>Lost</th><th>Points</th><th>ELO</th></tr>";
         $position = 1;
         foreach($table as $team){
-            $id = $team[0]['team_id'];
+            $id = $team[0]['id'];
             echo "<tr>";
             echo "<td align=center>" . $position . "</td>";
-            echo "<td align=center>" . $team[0]['team_id'] . "</td>";
+            echo "<td align=center>" . $team[0]['id'] . "</td>";
             echo "<td align=center><a href=teamStats.php?id=$id>" . $team[0]['player_names'] . "</a></td>";
             echo "<td align=center>" . $team[0]['win'] . "</td>";
             echo "<td align=center>" . $team[0]['lose'] . "</td>";

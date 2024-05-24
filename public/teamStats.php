@@ -15,10 +15,8 @@ $id=$_GET['id'];
 try{
     $conn = new PDO("mysql:host=$servername;dbname=$dbname",$username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $conn->prepare("SELECT teams.id, sum(tournament_teams.lose) AS team_lose, sum(tournament_teams.win) AS team_win FROM tournament_teams 
-    LEFT JOIN teams ON (
-    tournament_teams.team_id = teams.id
-    ) WHERE team_id = $id");
+    $stmt = $conn->prepare("SELECT teams.id, sum(teams.lose) AS team_lose, sum(teams.win) AS team_win FROM teams 
+    WHERE id = $id");
     $stmt->execute();
     $AllTeamStats = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $teamStats=$stmt->fetchAll();

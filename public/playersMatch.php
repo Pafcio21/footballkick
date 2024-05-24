@@ -11,10 +11,9 @@
     try{
         $conn = new PDO("mysql:host=$servername;dbname=$dbname",$username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("SELECT players.name, tournament_teams.team_id, sum(tournament_teams.win) AS win, sum(tournament_teams.lose) AS lose, sum(tournament_teams.points) AS points, 
-        sum(tournament_teams.win)-sum(tournament_teams.lose) AS ranking
-        FROM tournament_teams 
-        LEFT JOIN teams ON tournament_teams.team_id = teams.id 
+        $stmt = $conn->prepare("SELECT players.name, teams.id, sum(teams.win) AS win, sum(teams.lose) AS lose, sum(teams.points) AS points, 
+        sum(teams.win)-sum(teams.lose) AS ranking
+        FROM teams
         LEFT JOIN players ON teams.player1_id = players.id OR teams.player2_id = players.id 
         GROUP BY players.name 
         ORDER BY ranking DESC, points DESC");

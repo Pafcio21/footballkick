@@ -189,37 +189,6 @@ foreach ($team_stats as $stats) {
         $position++;
     }
     echo "</table>";
-    try {
-        // Pobieranie danych z tabeli team_stats
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname",$username, $password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("SELECT team_id, SUM(win) AS total_wins, SUM(lose) AS total_loses, SUM(points) as points FROM team_stats WHERE tournament_id = :tournament_id GROUP BY team_id");
-        $stmt->bindParam(':tournament_id', $id);
-        $stmt->execute();
-        $team_stats = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // Aktualizacja tabeli tournament_teams
-        foreach ($team_stats as $team_stat) {
-            $team_id = $team_stat['team_id'];
-            $total_wins = $team_stat['total_wins'];
-            $total_loses = $team_stat['total_loses'];
-            $points = $team_stat['points'];
-    
-            $sql = "UPDATE tournament_teams SET win = :total_wins, lose = :total_loses, points = :points WHERE team_id = :team_id AND tournament_id = :tournament_id";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':total_wins', $total_wins);
-            $stmt->bindParam(':total_loses', $total_loses);
-            $stmt->bindParam(':team_id', $team_id);
-            $stmt->bindParam(':tournament_id', $id);
-            $stmt->bindParam(':points', $points);
-            $stmt->execute();
-        }
-    } catch(PDOException $e) {
-        // Obsługa błędu
-        echo "Error: " . $e->getMessage();
-    }
-    
-    // Zamknięcie połączenia
-    $conn = null;
 try{
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
