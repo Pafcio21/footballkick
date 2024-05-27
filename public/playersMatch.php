@@ -33,7 +33,7 @@
         $position = 1;
         foreach($table as $team){
             echo "<tr>";
-            echo "<td align=center>" . $position . "</td>";
+            echo "<td align=center>" . $position . ".</td>";
             echo "<td align=center>" . $team[0]['name'] . "</td>";
             echo "<td align=center>" . $team[0]['win'] . "</td>";
             echo "<td align=center>" . $team[0]['lose'] . "</td>";

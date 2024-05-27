@@ -34,7 +34,7 @@
         foreach($table as $team){
             $id = $team[0]['id'];
             echo "<tr>";
-            echo "<td align=center>" . $position . "</td>";
+            echo "<td align=center>" . $position . ".</td>";
             echo "<td align=center>" . $team[0]['id'] . "</td>";
             echo "<td align=center><a href=teamStats.php?id=$id>" . $team[0]['player_names'] . "</a></td>";
             echo "<td align=center>" . $team[0]['win'] . "</td>";

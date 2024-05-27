@@ -24,7 +24,7 @@ try {
 }
 foreach($allPlayers as $player){
     echo "<table>";
-    echo "<tr><td width='40px'>".$player['id']."</td><td width='200px'>".$player['name']."</td></tr>";
+    echo "<tr><td width='40px' align=center>".$player['id'].".</td><td width='200px'>".$player['name']."</td></tr>";
 }
 $conn = null;
 
